@@ -37,3 +37,30 @@ func (service PurchaseOrderService) CreatePurchaseOrder(ctx context.Context, req
 
 	return response, nil
 }
+
+func (service PurchaseOrderService) GetById(ctx context.Context, purchaseOrderId string) (*model.GetPurchaseOrderResponse, error){
+	purchaseOrder, err := service.purchaseOrderRepository.GetById(purchaseOrderId)
+	if err != nil {
+		return nil, err
+	}
+
+	var itemDtos []model.PurchaseOrderItemDto
+
+	for _, itemEntity := range purchaseOrder.Items {
+		itemDtos = append(itemDtos, model.PurchaseOrderItemDto{
+			ID: itemEntity.ID,
+			PurchaseOrderID: itemEntity.PurchaseOrderID,
+			ItemID: itemEntity.ItemID,
+			ItemPrice: itemEntity.ItemPrice,
+			Quantity: itemEntity.Quantity,
+			Amount: itemEntity.Amount,
+		})
+	}
+	response := model.GetPurchaseOrderResponse{
+		ID: purchaseOrderId,
+		TotalAmount: purchaseOrder.TotalAmount,
+		PurchaseOrderItems: itemDtos,
+	}
+
+	return &response, nil
+}

@@ -10,4 +10,5 @@ func RegisterRoutes(app *fiber.App, purchaseOrderService *service.PurchaseOrderS
 	v1PurchaseOrder := v1.NewPurchaseOrderHandler(purchaseOrderService)
 	routes := app.Group("/purchase-orders")
 	routes.Post("/", v1PurchaseOrder.CreatePurchaseOrder)
+	routes.Get("/:id", v1PurchaseOrder.GetById)
 }

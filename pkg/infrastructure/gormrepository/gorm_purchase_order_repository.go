@@ -15,7 +15,7 @@ func NewGormPurchaseOrderRepository(gormDB *gorm.DB) *GormPurchaseOrderRepositor
 
 func (repo GormPurchaseOrderRepository) GetById(id string) (*domain.PurchaseOrder, error) {
 	purchaseOrder := new(domain.PurchaseOrder)
-	result := repo.db.First(purchaseOrder, id)
+	result := repo.db.Preload("Items").First(purchaseOrder, "id = ?", id)
 	return purchaseOrder, result.Error
 }
 

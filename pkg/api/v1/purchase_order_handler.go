@@ -42,3 +42,21 @@ func (h PurchaseOrderHandler) CreatePurchaseOrder(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(response)
 }
+
+func (h PurchaseOrderHandler) GetById(c *fiber.Ctx) error {
+	purchaseOrderId := c.Params("id")
+	if purchaseOrderId == "" {
+		errorResponse := errorutils.BAD_REQUEST_VALDATION_ERROR.NewErrorResponseModel("id can't be null", nil)
+		return c.Status(errorResponse.Error.Status).JSON(errorResponse)
+	}
+
+	ctx := c.UserContext()
+	response, err := h.purchaseOrderService.GetById(ctx, purchaseOrderId)
+
+	if err != nil {
+		errorResponse := errorutils.UNKNOWN_ERROR.NewErrorResponseModel(err.Error())
+		return c.Status(errorResponse.Error.Status).JSON(errorResponse)
+	}
+
+	return c.Status(fiber.StatusOK).JSON(response)
+}
