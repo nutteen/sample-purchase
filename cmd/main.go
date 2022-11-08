@@ -9,6 +9,9 @@ import (
 	"github.com/nutteen/png-core/core/middlewares/usercontext"
 	"github.com/nutteen/png-core/core/validator"
 	"github.com/nutteen/sample-purchase/pkg/config"
+	"github.com/nutteen/sample-purchase/pkg/infrastructure/gormrepository"
+	"github.com/nutteen/sample-purchase/pkg/router"
+	"github.com/nutteen/sample-purchase/pkg/service"
 	"log"
 )
 
@@ -32,8 +35,11 @@ func main() {
 	app.Use(usercontext.New())
 	app.Use(middlewarelogger.NewLogger(logger.Log, middlewarelogger.ConfigDefault))
 
-	// todo: Setup  service
-	// todo: Registers routes
+	purchaseOrderRepository := gormrepository.NewGormPurchaseOrderRepository(dbInstance)
+	purchaseOrderService := service.NewPurchaseOrderService(purchaseOrderRepository)
+
+	// Registers routes
+	router.RegisterRoutes(app, purchaseOrderService)
 
 	app.Listen(config.AppConfig.Server.Port)
 }

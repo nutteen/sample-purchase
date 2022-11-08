@@ -3,9 +3,12 @@ module github.com/nutteen/sample-purchase
 go 1.19
 
 require (
+	github.com/go-playground/validator/v10 v10.11.1
 	github.com/gofiber/fiber/v2 v2.39.0
-	github.com/nutteen/png-core v0.0.0-20221104114644-3148d00f23a2
+	github.com/nutteen/png-core v0.0.0-20221106122122-12372c2e1131
+	github.com/shopspring/decimal v1.2.0
 	github.com/spf13/viper v1.13.0
+	gorm.io/gorm v1.24.1
 )
 
 require (
@@ -13,7 +16,6 @@ require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
-	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.13.0 // indirect
@@ -53,5 +55,4 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.4.5 // indirect
-	gorm.io/gorm v1.24.1 // indirect
 )
